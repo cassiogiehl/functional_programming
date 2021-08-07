@@ -31,26 +31,38 @@ val indices: List[Int] = arr.indices.filter(
                 }  
               ).toList
 
-def verifyExists(arr: Array[Array[Int]], index: Int, index2: Int = null): Int = {
+def verifyExists(arr: Array[Array[Int]], index: Int): Array[Int] = {
   if(arr.indices.toList.contains(index)) {
-    arr(index)(index2)
+    arr(index)
   } else {
     Array(0)
   }
 }
 
-def getResult() = {
+def verifyExists(arr: Array[Int], index: Int): Int = {
+  if(arr.indices.toList.contains(index)) {
+    arr(index)
+  } else {
+    0
+  }
+}
+
+def getHourglass(a: Int, b: Int, c: Int, d: Int, e: Int, f: Int, g: Int) = {
 
   var result: Int = 0
 
   indices.map(
     index => {
-      if(index == 0 || index == 2) {
-        result = result + verifyExists(arr, index, 0)
-        result = result + verifyExists(arr, index, 1)
-        result = result + verifyExists(arr, index, 2)
+      if(index == 0) {
+        result = result + verifyExists(verifyExists(arr, index), a)
+        result = result + verifyExists(verifyExists(arr, index), b)
+        result = result + verifyExists(verifyExists(arr, index), c)
+      } else if(index == 2) {
+        result = result + verifyExists(verifyExists(arr, index), e)
+        result = result + verifyExists(verifyExists(arr, index), f)
+        result = result + verifyExists(verifyExists(arr, index), g)
       } else {
-        result = result + verifyExists(arr, index, 1)
+        result = result + verifyExists(verifyExists(arr, index), d)
       }
     }
   )
@@ -58,4 +70,9 @@ def getResult() = {
   result
 }
 
-print(getResult())
+print(getHourglass(0, 1, 2, 1, 0, 1, 2))
+print(getHourglass(1, 2, 3, 2, 1, 2, 3))
+print(getHourglass(2, 3, 4, 3, 2, 3, 4))
+print(getHourglass(3, 4, 5, 4, 3, 4, 5))
+
+
