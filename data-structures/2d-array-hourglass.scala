@@ -22,57 +22,69 @@ val arr: Array[Array[Int]] = Array(
     line6
   )
 
-// I don't know if this run!!!
-val indices: List[Int] = arr.indices.filter(
-                line => {
-                  line == 0 ||
-                  line == 1 ||
-                  line == 2
-                }  
-              ).toList
-
 def verifyExists(arr: Array[Array[Int]], index: Int): Array[Int] = {
   if(arr.indices.toList.contains(index)) {
     arr(index)
   } else {
-    Array(0)
+    Array(0, 0, 0, 0, 0, 0)
   }
 }
 
-def verifyExists(arr: Array[Int], index: Int): Int = {
-  if(arr.indices.toList.contains(index)) {
-    arr(index)
-  } else {
-    0
-  }
-}
+// def verifyExists(arr: Array[Int], index: Int): Int = {
+//   if(arr.indices.toList.contains(index)) {
+//     arr(index)
+//   } else {
+//     0
+//   }
+// }
 
-def getHourglass(a: Int, b: Int, c: Int, d: Int, e: Int, f: Int, g: Int) = {
+// def sumIfExists(arr: Array[Array[Int]], index: Int) = {
+//   var result: Int = 0 
+//   if(index == 0 || index == 2) {
+//     result = result + verifyExists(verifyExists(arr, index), 0)
+//     result = result + verifyExists(verifyExists(arr, index), 1)
+//     result = result + verifyExists(verifyExists(arr, index), 2)
+//   } else {
+//     result = result + verifyExists(verifyExists(arr, index), 1)
+//   }
 
-  var result: Int = 0
+//   result
+// }
 
-  indices.map(
-    index => {
-      if(index == 0) {
-        result = result + verifyExists(verifyExists(arr, index), a)
-        result = result + verifyExists(verifyExists(arr, index), b)
-        result = result + verifyExists(verifyExists(arr, index), c)
-      } else if(index == 2) {
-        result = result + verifyExists(verifyExists(arr, index), e)
-        result = result + verifyExists(verifyExists(arr, index), f)
-        result = result + verifyExists(verifyExists(arr, index), g)
-      } else {
-        result = result + verifyExists(verifyExists(arr, index), d)
-      }
+// def getHourglass(arr: Array[Array[Int]]) = {
+//   val result = scala.collection.mutable.ArrayBuffer[Int]()
+//   val indices: List[Int] = List(0, 1, 2)
+
+//   indices.map(
+//     index => {
+//       result += sumIfExists(arr, index)
+//     }
+//   )
+// }
+
+val result = scala.collection.mutable.ArrayBuffer[Array[Int]]()
+
+def getArr(arr: Array[Array[Int]]) = {
+  // arr.foreach(
+  //   x => println(x.mkString(" "))
+  // )
+
+  val lines = arr.indices.map(
+    indice => {
+      result += Array(indice)
+      var resultSum: Int = 0
+      // está percorendo uma vez cada linha, ajustar para percorrer todas as colunas também
+      resultSum = resultSum + verifyExists(arr, indice).slice(0, 3).reduce(_+_)
+      resultSum = resultSum + verifyExists(arr, indice + 1).slice(1, 2).reduce(_+_)
+      resultSum = resultSum + verifyExists(arr, indice + 2).slice(0, 3).reduce(_+_)
+
+      result(indice) = Array(resultSum)
     }
   )
 
-  result
+  result.foreach(
+    x => println(x.mkString)
+  )
 }
 
-print(getHourglass(0, 1, 2, 1, 0, 1, 2))
-print(getHourglass(1, 2, 3, 2, 1, 2, 3))
-print(getHourglass(2, 3, 4, 3, 2, 3, 4))
-print(getHourglass(3, 4, 5, 4, 3, 4, 5))
-
-
+print(getArr(arr))
