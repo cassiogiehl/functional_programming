@@ -64,6 +64,10 @@ def verifyExists(arr: Array[Array[Int]], index: Int): Array[Int] = {
 
 val result = scala.collection.mutable.ArrayBuffer[Array[Int]]()
 
+def recur(arr: Array[Int]) = {
+  //
+}
+
 def getArr(arr: Array[Array[Int]]) = {
   // arr.foreach(
   //   x => println(x.mkString(" "))
